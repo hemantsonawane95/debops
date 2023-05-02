@@ -1,0 +1,16 @@
+---
+ifupdown: True
+ifupdown__interfaces:
+
+  'ens3':
+    inet: 'static'
+    inet6: False
+    weight_class: 'mapping'
+    address: '{{ ansible_host }}/22'
+    gateway: '{{ mgmt_gateway }}'
+    options: |
+      dns-nameserver 8.8.8.8
+      pre-up /sbin/ifconfig ens3 {{ mgmt_mtu }}
+
+  'br0':
+    state: 'absent'

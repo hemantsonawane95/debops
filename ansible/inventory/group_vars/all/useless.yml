@@ -1,0 +1,39 @@
+ferm__enabled: False
+etckeeper__enabled: False
+tzdata__enabled: False
+atd__enabled: False
+fhs__enabled: False
+iscsi__enabled: False
+keyring__enabled: False
+proc_hidepid__enabled: False
+logrotate__enabled: False
+nsswitch__enabled: False
+resolvconf__enabled: False
+sudo__ldap_enabled: False
+journald__enabled: False
+rsyslog__enabled: False
+yadm__enabled: False
+ldap__enabled: False
+pki_enabled: False
+saslauthd__ldap_enabled: False
+sshd__ldap_enabled: False
+tftpd__upload_enabled: False
+unattended_upgrades__enabled: False
+dokuwiki__ldap_enabled: False
+dokuwiki__plugins_enabled: False
+dovecot__ldap_enabled: False
+dovecot_sieve_enabled: False
+avahi__enabled: False
+
+
+nullmailer__enabled: False 
+nullmailer__mailname: '{{ ansible_hostname }}'
+nullmailer__domain: 'cloudpoint.tcpro.cz'
+nullmailer__fqdn: '{{ ansible_hostname }}'
+
+debops_legacy__remove_packages:
+- name: 'cloud-init'
+  state: 'absent'
+
+resolvconf__static_enabled: False
+resolvconf__enabled: False

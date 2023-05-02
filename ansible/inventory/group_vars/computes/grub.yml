@@ -1,0 +1,13 @@
+---
+grub__configuration:
+  - name: 'cmdline_linux_default'
+    value: ''
+  - name: 'cmdline_linux_default'
+    value:
+      - 'iommu=pt'
+      - 'intel_iommu=on'
+      - 'default_hugepagesz=1G'
+      - 'transparent_hugepage=never'
+      - 'hugepages=950'
+      - 'hugepagesz=1G'
+

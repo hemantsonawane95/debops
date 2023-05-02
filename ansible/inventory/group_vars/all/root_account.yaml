@@ -1,0 +1,4 @@
+---
+root_account__password_update: True
+root_account__pasword_length: '10'
+root_account__password: '{{ "hariseldon" | password_hash("sha512") }}'

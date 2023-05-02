@@ -1,0 +1,10 @@
+---
+ntp__daemon_enabled: true
+
+ntp__daemon: ntpd
+
+ntp__servers:
+  - 'tik.cesnet.cz iburst'
+  - 'tak.cesnet.cz iburst'
+
+ntp__timezone: 'Etc/UTC'

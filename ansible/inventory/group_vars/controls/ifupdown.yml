@@ -1,0 +1,98 @@
+---
+ifupdown: False
+ifupdown__reconfigure_auto: False
+ifupdown__default_interfaces_map: 'manual'
+ifupdown__purge_packages: [ 'netplan.io', 'nplan', "cloud-init"]
+ifupdown__interfaces:
+
+  'enp177s0f0np0':
+    inet: 'manual'
+    weight_class: 'mapping'
+    type: 'ether'
+    inet6: False
+    add_options: |
+            bond-master bond0
+            up ethtool -G enp177s0f0np0 rx 2047 tx 2047
+            up ethtool -A enp177s0f0np0 autoneg off rx off tx off
+            post-up ip link set enp177s0f0np0 promisc on
+
+
+  'enp177s0f1np1':
+    inet: 'manual'
+    weight_class: 'mapping'
+    type: 'ether'
+    inet6: False
+    add_options: |
+            bond-master bond0
+            up ethtool -G enp177s0f1np1 rx 2047 tx 2047
+            up ethtool -A enp177s0f1np1 autoneg off rx off tx off
+            post-up ip link set enp177s0f1np1 promisc on
+
+  'bond0':
+    auto: True
+    type: 'bonding'
+    inet: 'static'
+    inet6: False
+    bond_slaves: ['none']
+    bond_mode: "{{ bond_mode }}"
+    bond_miimon: '100'
+    bond_downdelay: '200'
+    bond_updelay: '200'
+    #bond_xmit_hash_policy: 'layer3+4'
+    options: |
+      pre-up /sbin/ifconfig bond0 mtu {{ mgmt_mtu }} && /sbin/ifconfig enp177s0f0np0 mtu {{ mgmt_mtu }} && /sbin/ifconfig enp177s0f1np1 mtu {{ mgmt_mtu }}
+      post-up ip link set bond0 promisc on
+
+
+  'bond0.3002':
+    auto: True
+    inet: 'static'
+    address: '{{ tunnel_address }}'
+    vlan_device: 'bond0'
+    options: |
+      pre-up /sbin/ifconfig bond0.3002 mtu {{ mgmt_mtu }}
+
+  'bond0.3003':
+    auto: True
+    inet: 'static'
+    address: '{{ ceph_internal_address }}'
+    vlan_device: 'bond0'
+    options: |
+      pre-up /sbin/ifconfig bond0.3003 mtu {{ ceph_mtu }}
+
+  'bond0.3004':
+    auto: True
+    inet: 'manual'
+    vlan_device: 'bond0'
+    options: |
+      pre-up /sbin/ifconfig bond0.3004 mtu {{ ceph_mtu }}
+
+  # mgmt bridge
+  br0:
+    forward: True
+    type: 'bridge'
+    inet: 'static'
+    address: '{{ ansible_host }}/22'
+    gateway: '{{ mgmt_gateway }}'
+    bridge_ports: 'bond0'
+    options: |
+      dns-nameserver 8.8.8.8
+      post-up ip link set br0 promisc on
+
+  # ceph public bridge
+  br1:
+    forward: True
+    type: 'bridge'
+    inet: 'static'
+    address: '{{ ceph_public_address }}'
+    bridge_ports: 'bond0.3004'
+
+
+
+
+
+
+
+
+
+

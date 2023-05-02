@@ -1,0 +1,18 @@
+resources__files: []
+  # This shit is to fix a bug in ifupdown (https://unix.stackexchange.com/questions/714901/dns-broken-when-using-ifupdown-and-systemd-resolved-after-upgrade-to-ubuntu-22-0)
+
+resources__commands:
+  - name: 'Disable apparmor'
+    shell: |
+      if systemctl is-enabled apparmor ; then
+          systemctl disable apparmor
+      fi
+
+      if systemctl is-active apparmor ; then
+          systemctl stop apparmor
+      fi
+  - name: 'Apply netplan'
+    shell: |
+      #netplan apply
+
+resources__group_commands: []

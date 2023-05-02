@@ -1,0 +1,70 @@
+resources__group_files:
+  - dest: '/etc/rc.local'
+    mode: '0755'
+    content: |
+      #!/bin/sh -e
+
+      sleep 30
+      # for that we need the following packages: linux-tools-common linux-cloud-tools-generic linux-tools-generic
+      cpupower frequency-set --governor performance
+      ethtool -G enp129s0f0 rx 2048 tx 2048
+      ethtool -A enp129s0f0 autoneg off rx off tx off
+      ethtool -G enp197s0f0 rx 2048 tx 2048
+      ethtool -A enp197s0f0 autoneg off rx off tx off
+      ethtool -G enp129s0f1 rx 2048 tx 2048
+      ethtool -A enp129s0f1 autoneg off rx off tx off
+      ethtool -G enp197s0f1 rx 2048 tx 2048
+      ethtool -A enp197s0f1 autoneg off rx off tx off
+
+  - dest: '/etc/netplan/50-cloud-init.yaml'
+    mode: '0644'
+    content: |
+      network:
+        version: 2
+        renderer: networkd
+        ethernets:
+          enp129s0f0:
+            dhcp4: no
+            optional: true
+          enp129s0f1:
+            dhcp4: no
+            optional: true
+          enp197s0f0:
+            dhcp4: no
+            optional: true
+          enp197s0f1:
+            dhcp4: no
+            optional: true
+        bonds:
+          bond0:
+            interfaces: [ enp129s0f0, enp197s0f0 ]
+            mtu: {{ mgmt_mtu }}
+            addresses:
+            - {{ ansible_host }}/22
+            gateway4: {{ mgmt_gateway }}
+            nameservers:
+              addresses:
+              - 8.8.8.8
+              - 8.8.4.4
+            parameters:
+              mode: active-backup
+          bond1:
+            interfaces: [ enp129s0f1, enp197s0f1 ]
+            mtu: {{ mgmt_mtu }}
+            parameters:
+              mode: active-backup
+        vlans:
+          bond0.3003:
+            id: 3003
+            link: bond0
+            mtu: {{ ceph_mtu }}
+            optional: true
+            addresses:
+            - {{ ceph_internal_address }}
+          bond1.3004:
+            id: 3004
+            link: bond1
+            mtu: {{ ceph_mtu }}
+            optional: true
+            addresses:
+            - {{ ceph_public_address }}

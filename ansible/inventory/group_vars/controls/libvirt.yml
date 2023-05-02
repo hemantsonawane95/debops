@@ -1,0 +1,9 @@
+---
+libvirt__enabled: true
+libvirt__packages: ['libvirt-clients', 'qemu-utils', 'qemu-kvm', 'libvirt-daemon-system', 'libvirt-clients']
+libvirtd__enbled: true
+libvirtd_qemu__enabled: true
+libvirtd_qemu__host_configuration:
+  - name: security_driver
+    value: "none"
+    state: "present"

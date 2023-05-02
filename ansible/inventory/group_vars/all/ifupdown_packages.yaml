@@ -1,0 +1,3 @@
+---
+ifupdown__packages: [ 'ifenslave', 'ifupdown', 'vlan', 'bridge-utils', 'net-tools' ]
+ifupdown__purge_packages: [ 'netplan.io', 'nplan', "cloud-init" ]

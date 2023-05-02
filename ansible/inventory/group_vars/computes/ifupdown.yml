@@ -1,0 +1,96 @@
+---
+ifupdown: False
+ifupdown__reconfigure_auto: False
+ifupdown__default_interfaces_map: 'manual'
+ifupdown__interfaces:
+
+  'ens1f0np0':
+    inet: 'manual'
+    weight_class: 'mapping'
+    type: 'ether'
+    inet6: False
+    add_options: |
+            bond-master bond0
+            up ethtool -G ens1f0np0 rx 2047 tx 2047
+            up ethtool -A ens1f0np0 autoneg off rx off tx off
+
+  'ens1f1np1':
+    inet: 'manual'
+    weight_class: 'mapping'
+    type: 'ether'
+    inet6: False
+    add_options: |
+            bond-master bond1
+            up ethtool -G ens1f1np1 rx 2047 tx 2047
+            up ethtool -A ens1f1np1 autoneg off rx off tx off
+
+  'enp177s0f0np0':
+    inet: 'manual'
+    weight_class: 'mapping'
+    type: 'ether'
+    inet6: False
+    add_options: |
+            bond-master bond0
+            up ethtool -G enp177s0f0np0 rx 2047 tx 2047
+            up ethtool -A enp177s0f0np0 autoneg off rx off tx off
+
+  'enp177s0f1np1':
+    inet: 'manual'
+    weight_class: 'mapping'
+    type: 'ether'
+    inet6: False
+    add_options: |
+            bond-master bond1
+            up ethtool -G enp177s0f1np1 rx 2047 tx 2047
+            up ethtool -A enp177s0f1np1 autoneg off rx off tx off
+
+  'bond0':
+    auto: True
+    type: 'bonding'
+    inet: 'static'
+    inet6: False
+    address: '{{ ansible_host }}/22'
+    gateway: "{{ mgmt_gateway }}"
+    bond_slaves: ['none']
+    bond_mode: "{{ bond_mode }}"
+    bond_miimon: '100'
+    bond_downdelay: '200'
+    bond_updelay: '200'
+    #bond_xmit_hash_policy: 'layer3+4'
+    options: |
+      dns-nameserver 8.8.8.8
+      pre-up /sbin/ifconfig bond0 mtu {{ mgmt_mtu }} && /sbin/ifconfig ens1f0np0 mtu {{ mgmt_mtu }} && /sbin/ifconfig enp177s0f0np0 mtu {{ mgmt_mtu }}
+
+  'bond0.3004':
+    auto: True
+    inet: 'static'
+    address: '{{ ceph_public_address }}'
+    vlan_device: 'bond0'
+    options: |
+      pre-up /sbin/ifconfig bond0.3004 mtu {{ ceph_mtu }}
+
+
+  'bond1':
+    auto: True
+    type: 'bonding'
+    inet: 'manual'
+    inet6: False
+    bond_slaves: ['none']
+    bond_mode: "{{ bond_mode }}"
+    bond_miimon: '100'
+    bond_downdelay: '200'
+    bond_updelay: '200'
+    #bond_xmit_hash_policy: 'layer3+4'
+    options: |
+      pre-up /sbin/ifconfig bond1 mtu {{ mgmt_mtu }} && /sbin/ifconfig ens1f1np1 mtu {{ mgmt_mtu }} && /sbin/ifconfig enp177s0f1np1 mtu {{ mgmt_mtu }}
+
+  'br0':
+    state: 'absent'
+
+  'bond1.3002':
+    auto: True
+    inet: 'static'
+    address: '{{ tunnel_address }}'
+    vlan_device: 'bond1'
+    options: |
+      pre-up /sbin/ifconfig bond1.3002 mtu {{ ceph_mtu }}

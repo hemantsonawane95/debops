@@ -1,0 +1,7 @@
+---
+sshd__host_whitelist: [ '0.0.0.0/0' ]
+sshd__whitelist: [ '0.0.0.0/0' ]
+sshd__max_startups: '100:80:100'
+shd__use_dns: 'no'
+sshd__trusted_user_ca_keys: ['ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDqHe4l9IK2JI6qC+JXkmXei3u14zp5c9ccSVmtYYr2VskA6vZjugaFwPEYS0a8jtayMILrYTvj8o+9BSrwpLwV9FyrI0RNeK9cxkpa2aGEk+UqVmZhQ9Ce02x9s/px1dA5VC5ITNsQdkaFcMzB1jL/dBl/l4Bk47Hey5K2a/YGgY/8CTQb4SZVVHZBCwcSgvmWKGJsrBryDrtbwC9hLryrHwrDsvZHI1sKs5Uc1x/V/6rSa3wIR+XSWC/CjSQvpVD58/+XgcuAXBN0WPMwo9MYNsp8EqSx0yv2POafgzatx9MxOL5zajXY+4wKE1ARZlnpFXzX7r2e/p3jOzyyJXoR root@openstack-test-1-65-cfg01']
+sshd__trusted_user_ca_keys_file: '/etc/ssh/ca.pub'

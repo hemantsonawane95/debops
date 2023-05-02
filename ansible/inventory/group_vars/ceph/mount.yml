@@ -1,0 +1,6 @@
+---
+# TODO: add ceph mon
+mount__group_devices:
+  - name: '/var/lib/rook'
+    src: "/dev/disk/by-id/{{ ceph_mon_device }}"
+    fstype: 'xfs'

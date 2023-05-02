@@ -1,0 +1,4 @@
+apt_install__packages: []
+apt_install__group_packages:
+  - keepalived
+  - haproxy

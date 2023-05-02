@@ -1,0 +1,18 @@
+resources__group_commands: []
+resources__group_files:
+  - dest: '/etc/netplan/50-cloud-init.yaml'
+    mode: '0644'
+    content: |
+      network:
+        version: 2
+        renderer: networkd
+        ethernets:
+          ens3:
+            mtu: {{ mgmt_mtu }}
+            addresses:
+            - {{ ansible_host }}/22
+            gateway4: {{ mgmt_gateway }}
+            nameservers:
+              addresses:
+              - 8.8.8.8
+              - 8.8.4.4

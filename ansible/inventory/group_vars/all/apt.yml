@@ -1,0 +1,26 @@
+apt__cache_valid_time: 60
+apt__original_sources: []
+apt__default_sources: []
+apt__security_sources: []
+apt__conf:
+  - name: debops
+    priority: '99'
+    content: |
+      # This file is managed remotely, all changes will be lost
+      APT::Periodic::Unattended-Upgrade "0";
+      APT::Periodic::Update-Package-Lists "1";
+      APT::Periodic::Download-Upgradeable-Packages "0";
+      APT::Periodic::Download-Upgradeable-Packages "0";
+      Acquire::http::Proxy "false";
+
+apt__sources:
+  - repo: 'deb http://packages.itera.io/ubuntu jammy-backports main restricted universe multiverse'
+  - repo: 'deb http://packages.itera.io/ubuntu-security jammy-security main restricted universe multiverse'
+  - repo: 'deb http://packages.itera.io/ubuntu jammy-updates main restricted universe multiverse'
+  - repo: 'deb http://packages.itera.io/ubuntu jammy main restricted universe multiverse'
+
+apt_install__packages:
+  - linux-tools-common
+  - linux-cloud-tools-generic
+  - linux-tools-generic
+  - numactl
