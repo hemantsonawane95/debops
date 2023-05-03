@@ -43,11 +43,11 @@ To use this configuration, follow these steps:
 
 Clone this repository to your local machine:
 
-```git clone https://github.com/beskar-cloud/debops-lab.git```
+    git clone https://github.com/beskar-cloud/debops-lab.git
 
 Change into the debops-lab directory:
 
-```cd debops-lab```
+    cd debops-lab
 
 Modify the inventory file to match your target infrastructure environment and create `hosts` file containing the inventory of hosts that are 
 managed by the DebOps
