@@ -1,16 +1,16 @@
-#DebOps
+# DebOps
 This repository provides an example configuration for DebOps, a set of Ansible roles and playbooks for building and managing infrastructure.
 
 The configuration is intended to serve as a starting point for building infrastructure with DebOps, and includes a set of example roles and
 playbooks for common tasks such as setting up a networking, grub configuration, configuring SSH, managing users, apt configuration etc.
 
-##Requirements
+## Requirements
 To use this configuration, you will need the following:
 
 	_A Linux system with Ansible installed
 	_Access to a target infrastructure environment (e.g. cloud server, virtual machine)
 
-##Usage
+## Usage
 To use this configuration, follow these steps:
 
 Clone this repository to your local machine:
@@ -21,7 +21,7 @@ Change into the debops-lab directory:
 Modify the inventory file to match your target infrastructure environment and create `hosts` file containing the inventory of hosts that are 
 managed by the DebOps
 
-###sample inventory file:
+### sample inventory file:
 ```
   # This is an Ansible inventory file in INI format. You can define a list of
   # hosts and groups to be managed by this particular inventory.
@@ -164,7 +164,7 @@ managed by the DebOps
 ```
 Modify the groups in group_vars/ folder to configure the various settings used by the roles.
 
-##Groups
+## Groups
 
 Feel free to modify groups according to the needs of infrastructure.
 
