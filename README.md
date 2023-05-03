@@ -168,18 +168,22 @@ Modify the groups in group_vars/ folder to configure the various settings used b
 Feel free to modify groups according to the needs of infrastructure.
 
 1.  all:
+
 The group_vars/all/ file in the debops-lab repository contains variables and playbooks that are used across all hosts in the infrastructure. 
 These variables include settings such as the timezone, domain name, and DNS server configuration, ssh configuration, user configuration etc.
 
 2.  ceph:
+
 The group_vars/ceph directory in the debops-lab repository contains variables that are specific to the `ceph` group of hosts. 
 This group is defined in the inventory file and is used to configure ceph nodes in the infrastructure.
 
 3.  computes:
+
 The group_vars/computes directory in the debops-lab repository contains variables that are specific to the `computes` group of hosts. 
 This group is defined in the inventory file and is used to configure compute nodes in the infrastructure.
 
 4.  controls:
+
 The `controls` directory in the inventory/group_vars directory of the debops-lab repository contains variables that are used to configure 
 the control nodes.
 
@@ -187,7 +191,7 @@ the control nodes.
 
 These directory or groups in invnentory are used to configure virtual machiens. 
 
-Run the DebOps playbooks to configure the infrastructure. For example, to configure a network configuration of compute server:
+* Run the DebOps playbooks to configure the infrastructure. For example, to configure a network configuration of compute server:
 
 ```sudo debops --private-key=<ssh-key> -l  computes service/ifupdown  -t role::ifupdown```
 
