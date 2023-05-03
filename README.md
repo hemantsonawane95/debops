@@ -4,10 +4,39 @@ This repository provides an example configuration for DebOps, a set of Ansible r
 The configuration is intended to serve as a starting point for building infrastructure with DebOps, and includes a set of example roles and
 playbooks for common tasks such as setting up a networking, grub configuration, configuring SSH, managing users, apt configuration etc.
 
+You can find out more about DebOps features on the [project's documentation
+page][debops-docs]
+
 ## Requirements
 To use this configuration, you will need the following:
 - A Linux system with Ansible installed
 - Access to a target infrastructure environment (e.g. cloud server, virtual machine)
+
+Installation
+------------
+
+You can install the [DebOps Python package][debops-pypi], which includes the
+DebOps roles and playbooks, as well as additional scripts which can be used to
+setup separate project directories and run Ansible in a convenient way. To
+install the Python package with Ansible and other required dependencies, run
+the command:
+
+    pip install --user debops[ansible]
+
+[debops-pypi]: https://pypi.org/project/debops/
+
+Alternatively, DebOps roles are available on [Ansible Galaxy][debops-galaxy]
+as an Ansible Collection which can be installed using the `ansible-galaxy`
+command:
+
+    ansible-galaxy collection install debops.debops
+
+[debops-galaxy]: https://galaxy.ansible.com/debops/debops/
+
+Read the [installation instructions][install] in the DebOps documentation for
+more details about required software and dependencies.
+
+[install]: https://docs.debops.org/en/master/introduction/install.html
 
 ## Usage
 To use this configuration, follow these steps:
@@ -193,7 +222,11 @@ the control nodes.
 
 Run the DebOps playbooks to configure the infrastructure. For example, to configure a network configuration of compute server:
 
-```sudo debops --private-key=<ssh-key> -l  computes service/ifupdown  -t role::ifupdown```
+```sudo debops --private-key=<ssh-key> -l  computes service/ifupdown ```
 
+You should read the [Getting Started with DebOps][getting-started] guide for
+a more in-depth explanation of how the project can be used to manage multiple
+hosts via Ansible.
 
+[getting-started]: https://docs.debops.org/en/master/introduction/getting-started.html
 
