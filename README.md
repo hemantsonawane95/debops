@@ -7,8 +7,8 @@ playbooks for common tasks such as setting up a networking, grub configuration, 
 ## Requirements
 To use this configuration, you will need the following:
 
-	- A Linux system with Ansible installed
-	- Access to a target infrastructure environment (e.g. cloud server, virtual machine)
+	* A Linux system with Ansible installed
+	* Access to a target infrastructure environment (e.g. cloud server, virtual machine)
 
 ## Usage
 To use this configuration, follow these steps:
